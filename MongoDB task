@@ -1,0 +1,36 @@
+// 1. Create the database and collection (if not already done)
+use company;
+db.createCollection("employees");
+
+// 2. Insert data into the employees collection
+db.employees.insertMany([
+    { empcode: 101, empname: "Jenny", empage: 25, esalary: 10000 },
+    { empcode: 102, empname: "Alice", empage: 30, esalary: 15000 },
+    { empcode: 103, empname: "Bob", empage: 40, esalary: 20000 },
+    { empcode: 104, empname: "Michael", empage: 35, esalary: 22000 },
+    { empcode: 105, empname: "Emma", empage: 28, esalary: 25000 }
+]);
+
+// 3. Query employees whose salary is greater than or equal to 22000
+db.employees.find({ esalary: { $gte: 22000 } });
+
+// 4. Query employees whose name contains "A" as the third character
+db.employees.find({ empname: /..A/ });
+
+// 5. Query employees with age greater than or equal to 30, and salary greater than or equal to 20000
+db.employees.find({ empage: { $gte: 30 }, esalary: { $gte: 20000 } });
+
+// 6. Query employees whose name starts with "J" and has a salary less than 15000
+db.employees.find({ empname: /^J/, esalary: { $lt: 15000 } });
+
+// 7. Find the first employee where salary is greater than or equal to 15000
+db.employees.findOne({ esalary: { $gte: 15000 } });
+
+// 8. Query employees with empcode between 102 and 104
+db.employees.find({ empcode: { $gte: 102, $lte: 104 } });
+
+// 9. Update salary of employee with empcode 101 to 12000
+db.employees.updateOne({ empcode: 101 }, { $set: { esalary: 12000 } });
+
+// 10. Delete employee with empcode 105
+db.employees.deleteOne({ empcode: 105 });
